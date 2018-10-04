@@ -1,6 +1,6 @@
 //authenticated
 const Product = {
-    FETCH: '/products'
+    URL_JSON_SERVER: '/products'
 }
 
 module.exports = {

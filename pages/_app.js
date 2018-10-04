@@ -5,6 +5,7 @@ import withRedux from 'next-redux-wrapper'
 import withReduxSaga from 'next-redux-saga'
 import createStore from '../store'
 import 'bootstrap/dist/css/bootstrap.min.css';
+import './App.css';
 import { I18nextProvider } from 'react-i18next'
 import startI18n from '../lib/startI18n'
 import { getTranslation } from '../lib/translationHelpers'

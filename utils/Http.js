@@ -46,6 +46,10 @@ export default class Http {
         return this.executeRequest(url, { method: 'patch', ...config, data })
     }
 
+    delete(url, data, config = {}) {
+        return this.executeRequest(url, { method: 'delete', ...config, data })
+    }
+
     executeRequest(url, config) {
         const finalHeaderConfig = { ...this.config.headers, ...config.headers }
         const finalConfig = { ...this.config, url, ...config, headers: { ...finalHeaderConfig } }
