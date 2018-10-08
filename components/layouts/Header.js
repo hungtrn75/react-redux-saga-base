@@ -1,10 +1,14 @@
 import React from 'react';
 import Link from 'next/link';
 import ActiveLink from './../ActiveLink';
+import { reqLogoutAuth } from './../../modules/auth/actions';
+import { connect } from 'react-redux';
+import { withRouter } from 'next/router'
 
-export default class Header extends React.Component {
-    constructor(props) {
-        super(props);
+class Header extends React.Component {
+    onLogout = () => {
+        this.props.logout();
+        window.location.href = "/auth/login"
     }
 
     render() {
@@ -22,10 +26,24 @@ export default class Header extends React.Component {
                         </li>
                     </ul>
                     <ul className="form-inline my-2 my-lg-0">
-                        <ActiveLink name='login' className=''>Login</ActiveLink>
+                        <Link href='javascript:;'>
+                            <a onClick={this.onLogout}>Logout</a>
+                        </Link>
                     </ul>
                 </div>
             </nav>
         );
     }
 }
+
+const mapStateToProps = state => ({});
+
+const mapDispatchToProps = (dispatch, props) => {
+    return {
+        logout: (router) => {
+            dispatch(reqLogoutAuth(router));
+        }
+    }
+}
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Header));

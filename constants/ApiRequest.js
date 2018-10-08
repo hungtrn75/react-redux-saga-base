@@ -1,8 +1,14 @@
 //authenticated
 const Product = {
-    URL_JSON_SERVER: '/products'
+    URL_RESTFUL: '/products'
+}
+
+const Auth = {
+    REGISTER: '/user/register',
+    LOGIN: '/user/login'
 }
 
 module.exports = {
-    Product
+    Product,
+    Auth
 };
