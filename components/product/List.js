@@ -3,18 +3,26 @@ import Main from './../Main'
 import Http from './../../utils/Http';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { reqFetchProducts } from './../../modules/product/actions'
+import { reqFetchProducts, reqDeleteProduct } from './../../modules/product/actions'
 import { translate } from 'react-i18next'
 import { compose } from 'redux'
+import ActiveLink from './../ActiveLink';
+import Link from 'next/link'
 
 class List extends React.Component {
-  constructor(props) {
-    super(props);
-  }
+    constructor(props) {
+      super(props);
+    }
 
-  componentDidMount() {
-    this.props.getProducts();
-  }
+    componentDidMount() {
+      this.props.getProducts();
+    }
+
+    onDelete = id => {
+        if (confirm('Bạn chắc chắn muốn xóa ?')) {
+            this.props.deleteProduct(id);
+        }
+    }
 
   render() {
     const { products, t } = this.props;
@@ -27,8 +35,8 @@ class List extends React.Component {
                         <td>{ product.name }</td>
                         <td>{ product.description }</td>
                         <td>{ product.price }</td>
-                        <td>Edit</td>
-                        <td>Delete</td>
+                        <td><ActiveLink className='' name='edit_product' params={{id: product.id}}>Edit</ActiveLink></td>
+                        <td><Link href="javascript:;"><a onClick={() => this.onDelete(product.id)}>Delete</a></Link></td>
                     </tr>
                 );
             });
@@ -38,7 +46,7 @@ class List extends React.Component {
 
     return (
       <Main>
-        <h2>{ t('common:list') }</h2>
+        <h2>{ t('common:list') }</h2><ActiveLink name='create_product' className='btn btn-block btn-light col-md-3'>Create</ActiveLink><br/>
           <table className="table">
             <thead className="thead-light">
               <tr>
@@ -50,7 +58,7 @@ class List extends React.Component {
               </tr>
             </thead>
             <tbody>
-              { products.length > 0 ? showProducts(products) : <tr><td className="table-bitterz__no-record" colSpan="4">No Product</td></tr> }
+              { products.products.length > 0 ? showProducts(products.products) : <tr><td className="table-bitterz__no-record" colSpan="4">No Product</td></tr> }
             </tbody>
           </table>
       </Main>
@@ -58,14 +66,19 @@ class List extends React.Component {
   }
 }
 
-const mapStateToProps = state => ({
-    products: state.products
-});
+const mapStateToProps = state => {
+    return {
+        products: state.products
+    }
+}
 
 const mapDispatchToProps = (dispatch, props) => {
     return {
         getProducts: () => {
             dispatch(reqFetchProducts());
+        },
+        deleteProduct: (id) => {
+            dispatch(reqDeleteProduct(id));
         }
     }
 }

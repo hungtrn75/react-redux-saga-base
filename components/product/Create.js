@@ -1,37 +1,77 @@
 import React from 'react';
 import Main from './../Main'
+import ActiveLink from './../ActiveLink';
+import { reqCreateProduct } from './../../modules/product/actions'
+import {connect} from "react-redux";
+import { withRouter } from 'next/router'
 
-export default class Create extends React.Component {
+class Create extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+        name: '',
+        description: '',
+        price: ''
+    }
   }
 
+  onChange = e => {
+      this.setState({
+          [e.target.name]: e.target.value
+      });
+  };
+
+
+  onSubmit = e => {
+      e.preventDefault();
+      const { name, description, price } = this.state;
+      const params = {name, description, price};
+      this.props.createProduct(params, this.props.router)
+  };
+
   render() {
+    const { name, description, price } = this.state;
+
     return (
       <Main>
         <div className="container mb-4">
           <div className="row">
-            <form>
+            <form onSubmit={this.onSubmit}>
               <div className="">
                 <div className="form-group">
-                  <label for="exampleFormControlInput1">Name</label>
-                  <input type="input" name="name" className="form-control" />
+                  <label>Name</label>
+                    <input 
+                      name="name"
+                      type="text"
+                      placeholder="Name Product"
+                      className="form-control"
+                      value={name}
+                      onChange={this.onChange}
+                    />
                 </div>
                 <div className="form-group">
-                  <label for="exampleFormControlTextarea1">Description</label>
-                  <textarea className="form-control" rows="3"></textarea>
+                  <label>Description</label>
+                  <textarea className="form-control" rows="3" placeholder="Description Product" name="description" value={description} onChange={this.onChange}></textarea>
                 </div>
                 <div className="form-group">
-                  <label for="exampleFormControlInput1">Price</label>
-                  <input type="input" name="price" className="form-control" />
+                  <label>Price</label>
+                  <input
+                    name="price"
+                    type="text"
+                    placeholder="Price Product"
+                    className="form-control"
+                    value={price}
+                    onChange={this.onChange}
+                  />
                 </div>
 
                 <div className="clearfix"></div>
                 <div className="">
                     <div className="row">
                         <div className="col-sm-12  col-md-6">
-                            <button className="btn btn-block btn-light">Cancel</button>
+                            <ActiveLink name='products' className='btn btn-block btn-light'>Back</ActiveLink><br/>
                         </div>
+
                         <div className="col-sm-12 col-md-6 text-right">
                             <button className="btn btn-lg btn-block btn-primary text-uppercase">Submit</button>
                         </div>
@@ -45,3 +85,14 @@ export default class Create extends React.Component {
     );
   }
 }
+const mapStateToProps = state => ({});
+
+const mapDispatchToProps = (dispatch, props) => {
+    return {
+        createProduct: (product, router) => {
+            dispatch(reqCreateProduct(product, router));
+        }
+    }
+}
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Create));

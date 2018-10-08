@@ -1,8 +1,8 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import List from './../components/product/List'
-import 'bootstrap/dist/css/bootstrap.min.css';
-import './App.css';
+import ActiveLink from './../components/ActiveLink';
+import Main from './../components/Main';
 
 export default class Index extends React.Component {
 
@@ -12,7 +12,10 @@ export default class Index extends React.Component {
 
   render () {
     return (
-        <List />
+    	<Main>
+	        <span>This is Home Page</span><br/>
+			    <ActiveLink name='products'>Products</ActiveLink>
+  		</Main>
     )
   }
 }

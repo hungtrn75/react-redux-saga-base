@@ -9,7 +9,7 @@ export default class Banner extends React.Component {
         return (
             <section className="jumbotron text-center">
                 <div className="container">
-                    <h1 className="jumbotron-heading">E-COMMERCE CART</h1>
+                    <h1 className="jumbotron-heading">REDUX SAGA BASE</h1>
                 </div>
             </section>
         );

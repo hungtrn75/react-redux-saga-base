@@ -4,7 +4,7 @@ import products from './product/reducers';
 import * as productSagas from './product/sagas';
 
 export const rootReducer = combineReducers({
-    products
+    products,
 });
 
 export function* rootSaga() {

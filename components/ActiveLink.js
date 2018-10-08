@@ -1,20 +1,19 @@
 import { withRouter } from 'next/router'
+import {Router, Link} from '../routes'
 
-const ActiveLink = ({ children, className, router, href }) => {
-  const style = {
-    marginRight: 10,
-    color: router.pathname === href ? 'black' : 'blue'
-  }
+const ActiveLink = ({ children, name, className, params}) => {
 
   const handleClick = (e) => {
     e.preventDefault()
-    router.push(href)
+    Router.pushRoute(name, params)
   }
 
   return (
-    <a href={href} className={className} onClick={handleClick} style={style}>
-      {children}
-    </a>
+    <Link route={name} params={params}>
+      <a onClick={handleClick} className={className}>
+        {children}
+      </a>
+    </Link>
   )
 }
 
