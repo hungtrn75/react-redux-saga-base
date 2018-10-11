@@ -5,14 +5,15 @@ import withRedux from 'next-redux-wrapper'
 import withReduxSaga from 'next-redux-saga'
 import createStore from '../store'
 import 'bootstrap/dist/css/bootstrap.min.css';
-import './css/App.css';
-import './css/login.css';
+import './../static/css/App.css';
+import './../static/css/login.css';
 import { I18nextProvider } from 'react-i18next'
 import startI18n from '../lib/startI18n'
 import { getTranslation } from '../lib/translationHelpers'
+import { setCookie, getCookie, removeCookie } from './../utils/cookie';
+import config from './../config'
 
 const lang = "ja";
-
 class MyApp extends App {
     static async getInitialProps ({ Component, ctx }) {
         let pageProps = {}
@@ -23,7 +24,7 @@ class MyApp extends App {
                 translations = await getTranslation(
                 lang,
                 ['common'],
-                'http://localhost:3000/static/locales/'
+                config.CLIENT_URL + '/static/locales/'
             )
         }
 

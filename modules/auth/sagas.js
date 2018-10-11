@@ -1,13 +1,13 @@
 import { takeEvery, call, put, takeLatest } from 'redux-saga/effects';
-import { registerAuth, loginAuth } from './api';
+import { registerAuth, loginAuth, refreshAuth } from './api';
 import * as Types from './types'
-import { recLoginAuth, reRecLoginAuth } from './actions';
+import { recLoginAuth } from './actions';
 import { setCookie, removeCookie } from './../../utils/cookie';
 
 function* callRegisterAuth(payload) {
     try {
         let user = yield call(registerAuth, payload.data);
-        yield call(payload.router.push, '/login');
+        yield call(payload.router.push, '/auth/login');
     } catch (e) {
         console.log(e);
     }

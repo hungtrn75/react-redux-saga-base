@@ -10,7 +10,7 @@ export function createNewProduct(product) {
 }
 
 export function editProduct(id) {
-    return (new Http()).authenticated().get(Product.URL_RESTFUL + '/' + id)
+    return (new Http()).authenticated().get(Product.URL_RESTFUL + '/' + id + '/edit')
 }
 
 export function updateProduct(payload) {
