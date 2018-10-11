@@ -3,19 +3,35 @@ import {connect} from 'react-redux'
 import List from './../components/product/List'
 import ActiveLink from './../components/ActiveLink';
 import Main from './../components/Main';
+import initialize from '../utils/initialize';
+import { withRouter } from 'next/router'
 
-export default class Index extends React.Component {
+class Index extends React.Component {
 
-  static getInitialProps ({ store, isServer }) {
-    return { isServer }
-  }
+    static getInitialProps ({ctx}) {
+        initialize(ctx);
+    }
 
-  render () {
-    return (
-    	<Main>
-	        <span>This is Home Page</span><br/>
-			    <ActiveLink name='products'>Products</ActiveLink>
-  		</Main>
-    )
-  }
+    componentDidMount() {
+        if (!this.props.isAuthenticated) {
+            this.props.router.push('/auth/login');
+        }
+    }
+
+    render () {
+        return (
+        	<Main>
+    	        <span>This is Home Page</span><br/>
+    		    <ActiveLink name='products'>Products</ActiveLink>
+      		</Main>
+        )
+    }
 }
+
+const mapStateToProps = (state) => {
+    return {
+        isAuthenticated : state.auth.isAuthenticated,
+    }
+};
+
+export default withRouter(connect(mapStateToProps)(Index));

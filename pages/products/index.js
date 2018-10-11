@@ -4,13 +4,13 @@ import List from './../../components/product/List'
 
 export default class Index extends React.Component {
 
-  static getInitialProps ({ store, isServer }) {
-    return { isServer }
-  }
+  	static getInitialProps ({ store, isServer }) {
+    	return { isServer }
+  	}
 
-  render () {
-    return (
-        <List />
-    )
-  }
+  	render () {
+    	return (
+        	<List />
+    	)
+  	}
 }

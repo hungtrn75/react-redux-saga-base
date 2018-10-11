@@ -5,7 +5,8 @@ const routes = module.exports = nextRoutes()
 
 routes.add('home', '/', '/')
 
-routes.add('login', '/login', 'login')
+routes.add('login', '/auth/login', 'auth/login')
+routes.add('register', '/auth/register', 'auth/register')
 
 routes.add('products', '/products', 'products')
 routes.add('edit_product', '/products/:id/edit', 'products/edit')

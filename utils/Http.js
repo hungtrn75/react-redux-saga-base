@@ -1,5 +1,6 @@
 import axios from 'axios'
 import systemConfig from './../config'
+import { getCookie } from './cookie'
 
 const DEFAULT_CONFIG = {
     baseURL: systemConfig.API_URL,
@@ -26,7 +27,7 @@ export default class Http {
     }
 
     authenticated() {
-        const storedData = localStorage.getItem("token");
+        const storedData = getCookie("token");
         if (storedData) {
             this.config.headers.Authorization = `${systemConfig.auth.token_type} ${storedData}`;
         }

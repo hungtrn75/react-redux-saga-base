@@ -4,11 +4,12 @@ import Banner from './layouts/Banner'
 import Footer from './layouts/Footer'
 
 export default ({ children }) => (
-  <div className="container">
-    <Header />
-    <Banner />
-    { children }
-    <Footer />
-  </div>
+  	<div className="container">
+    	<Header />
+    	<Banner />
+    	{ children }
+    	<Footer />
+  	</div>
 )
+
 
