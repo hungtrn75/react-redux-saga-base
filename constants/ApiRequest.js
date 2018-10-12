@@ -5,7 +5,8 @@ const Product = {
 
 const Auth = {
     REGISTER: '/user/register',
-    LOGIN: '/user/login'
+    LOGIN: '/user/login',
+    REFRESH: '/user/refresh'
 }
 
 module.exports = {

@@ -30,7 +30,7 @@ export function reRecLoginAuth (token) {
     }
 }
 
-export function reqLogoutAuth() {
+export function reqLogoutAuth () {
     return {
         type: Types.REQUEST_LOGOUT_AUTH
     }

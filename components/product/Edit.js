@@ -25,9 +25,9 @@ class EditComponent extends React.Component {
     onSubmit = e => {
         e.preventDefault();
         const { name, description, price } = this.state;
-        let { product } = this.props;
+        let { products } = this.props;
         const params = {name, description, price};
-        this.props.updateProduct(product.id, params, this.props.router)
+        this.props.updateProduct(products.product.id, params, this.props.router)
     };
 
     componentDidMount() {
@@ -36,7 +36,7 @@ class EditComponent extends React.Component {
     }
 
     componentWillReceiveProps(nextProps){
-        if(nextProps && nextProps.products){
+        if (nextProps && nextProps.products) {
             const {products} = nextProps;
             this.setState({
                 name: products.product.name,
