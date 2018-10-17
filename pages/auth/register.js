@@ -3,6 +3,7 @@ import {connect} from 'react-redux'
 import Register from './../../components/auth/Register'
 import initialize from './../../utils/initialize';
 import { withRouter } from 'next/router'
+import { reqRegisterAuth } from './../../modules/auth/actions'
 
 class RegisterPage extends React.Component {
 
@@ -18,7 +19,7 @@ class RegisterPage extends React.Component {
 
     render () {
         return (
-            <Register />
+            <Register auth={this.props}/>
         )
     }
 }
@@ -29,4 +30,12 @@ const mapStateToProps = (state) => {
     }
 };
 
-export default withRouter(connect(mapStateToProps)(RegisterPage));
+const mapDispatchToProps = (dispatch, props) => {
+    return {
+        registerAuth: (data, router) => {
+            dispatch(reqRegisterAuth(data, router));
+        }
+    }
+}
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(RegisterPage));

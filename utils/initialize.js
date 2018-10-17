@@ -17,7 +17,7 @@ export default function(ctx) {
   } else {
     const token = ctx.store.getState().auth.isAuthenticated;
 
-    if(token && (ctx.pathname === '/auth/login' || ctx.pathname === '/auth/register')) {
+    if (token && (ctx.pathname === '/auth/login' || ctx.pathname === '/auth/register')) {
             setTimeout(function() {
                 Router.push('/');
             }, 0);

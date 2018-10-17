@@ -3,6 +3,7 @@ import {connect} from 'react-redux'
 import Login from './../../components/auth/Login'
 import initialize from './../../utils/initialize';
 import { withRouter } from 'next/router'
+import { reqLoginAuth } from './../../modules/auth/actions'
 
 class LoginPage extends React.Component {
 
@@ -18,7 +19,7 @@ class LoginPage extends React.Component {
 
     render () {
         return (
-            <Login />
+            <Login auth={this.props}/>
         )
     }
 }
@@ -29,4 +30,12 @@ const mapStateToProps = (state) => {
     }
 };
 
-export default withRouter(connect(mapStateToProps)(LoginPage));
+const mapDispatchToProps = (dispatch, props) => {
+    return {
+        loginAuth: (data, router) => {
+            dispatch(reqLoginAuth(data, router));
+        }
+    }
+}
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(LoginPage));

@@ -24,7 +24,7 @@ class Login extends React.Component {
         e.preventDefault();
         const { email, password } = this.state;
         const params = { email, password };
-        this.props.loginAuth(params, this.props.router)
+        this.props.auth.loginAuth(params, this.props.router)
     };
 
     render() {
@@ -75,14 +75,4 @@ class Login extends React.Component {
     }
 }
 
-const mapStateToProps = state => ({});
-
-const mapDispatchToProps = (dispatch, props) => {
-    return {
-        loginAuth: (data, router) => {
-            dispatch(reqLoginAuth(data, router));
-        }
-    }
-}
-
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Login));
+export default withRouter(Login);

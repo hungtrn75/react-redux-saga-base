@@ -1,31 +1,25 @@
 import React from 'react';
 import Main from './../Main'
-import Http from './../../utils/Http';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
-import { reqFetchProducts, reqDeleteProduct } from './../../modules/product/actions'
-import { translate } from 'react-i18next'
-import { compose } from 'redux'
 import ActiveLink from './../ActiveLink';
 import Link from 'next/link'
 
-class List extends React.Component {
+export default class List extends React.Component {
     constructor(props) {
         super(props);
     }
 
     componentDidMount() {
-        this.props.getProducts();
+        this.props.products.getProducts()
     }
 
     onDelete = id => {
         if (confirm('Bạn chắc chắn muốn xóa ?')) {
-            this.props.deleteProduct(id);
+            this.props.products.deleteProduct(id);
         }
     }
 
     render() {
-        const { products, t } = this.props;
+        const { products, t } = this.props.products;
         let showProducts = (products) =>{
             let result = null;
             if (products.length > 0) {
@@ -71,25 +65,3 @@ class List extends React.Component {
         );
     }
 }
-
-const mapStateToProps = state => {
-    return {
-        products: state.products
-    }
-}
-
-const mapDispatchToProps = (dispatch, props) => {
-    return {
-        getProducts: () => {
-            dispatch(reqFetchProducts());
-        },
-        deleteProduct: (id) => {
-            dispatch(reqDeleteProduct(id));
-        }
-    }
-}
-
-export default compose(
-    connect(mapStateToProps, mapDispatchToProps),
-    translate(['common'])
-)(List);

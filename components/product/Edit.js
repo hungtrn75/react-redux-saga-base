@@ -1,8 +1,6 @@
 import React from 'react';
 import Main from './../Main'
 import ActiveLink from './../ActiveLink';
-import { reqEditProduct, reqUpdateProduct } from './../../modules/product/actions'
-import {connect} from "react-redux";
 import { withRouter } from 'next/router'
 
 class EditComponent extends React.Component {
@@ -25,19 +23,17 @@ class EditComponent extends React.Component {
     onSubmit = e => {
         e.preventDefault();
         const { name, description, price } = this.state;
-        let { products } = this.props;
         const params = {name, description, price};
-        this.props.updateProduct(products.product.id, params, this.props.router)
+        this.props.product.updateProduct(this.props.id, params, this.props.router)
     };
 
     componentDidMount() {
-        let product = this.props;
-        this.props.editProduct(product.id)
+        this.props.product.editProduct(this.props.id)
     }
 
     componentWillReceiveProps(nextProps){
-        if (nextProps && nextProps.products) {
-            const {products} = nextProps;
+        if (nextProps && nextProps.product.products) {
+            const {products} = nextProps.product;
             this.setState({
                 name: products.product.name,
                 description: products.product.description,
@@ -48,7 +44,7 @@ class EditComponent extends React.Component {
 
     render() {
         const { name, description, price } = this.state;
-        const { products } = this.props
+        const { products } = this.props.product.products
 
         return (
             <Main>
@@ -104,21 +100,4 @@ class EditComponent extends React.Component {
     }
 }
 
-const mapStateToProps = state => {
-    return {
-        products : state.products
-    }
-}
-
-const mapDispatchToProps = (dispatch, props) => {
-    return {
-        editProduct: (id) => {
-            dispatch(reqEditProduct(id));
-        },
-        updateProduct: (id, product, router) => {
-            dispatch(reqUpdateProduct(id, product, router));
-        }
-    }
-}
-
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(EditComponent));
+export default withRouter(EditComponent);

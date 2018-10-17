@@ -1,7 +1,6 @@
 import React from 'react';
 import ActiveLink from './../ActiveLink'
 import { withRouter } from 'next/router'
-import { reqRegisterAuth } from './../../modules/auth/actions'
 import {connect} from "react-redux";
 
 class Register extends React.Component {
@@ -26,7 +25,7 @@ class Register extends React.Component {
         e.preventDefault();
         const { username, email, password, confirm_password } = this.state;
         const params = {username, email, password, confirm_password};
-        this.props.registerAuth(params, this.props.router)
+        this.props.auth.registerAuth(params, this.props.router)
     };
 
     render() {
@@ -97,14 +96,4 @@ class Register extends React.Component {
     }
 }
 
-const mapStateToProps = state => ({});
-
-const mapDispatchToProps = (dispatch, props) => {
-    return {
-        registerAuth: (data, router) => {
-            dispatch(reqRegisterAuth(data, router));
-        }
-    }
-}
-
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Register));
+export default withRouter(Register);
