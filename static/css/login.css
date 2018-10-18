@@ -32,6 +32,10 @@
   margin-bottom: 1rem;
 }
 
+.border.border-danger {
+  border-radius: 0.5em;
+}
+
 .form-label-group input {
   border-radius: 0.5em;
 }

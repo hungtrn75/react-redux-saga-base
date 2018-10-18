@@ -1,10 +1,10 @@
 Building...!!!
 * Usage
-1. sudo npm install json-server -g
-2. npm install
-3. json-server api.json -p 4000 --watch (root)
-4. npm run dev
 
+API by Laravel: https://github.com/sonhip94/laravel-api
+NextJS
+- npm install
+- npm run dev
 * API <br>
 Register<br>
 method: POST<br>
@@ -62,4 +62,3 @@ Output: {
     Object Data
 }
 ```
-

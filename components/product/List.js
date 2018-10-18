@@ -1,9 +1,9 @@
-import React from 'react';
+import React, {Component} from 'react';
 import Main from './../Main'
 import ActiveLink from './../ActiveLink';
 import Link from 'next/link'
 
-export default class List extends React.Component {
+export default class List extends Component {
     constructor(props) {
         super(props);
     }

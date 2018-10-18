@@ -1,16 +1,17 @@
-import React from 'react';
+import React, {Component} from 'react';
 import ActiveLink from './../ActiveLink'
 import { withRouter } from 'next/router'
 import {connect} from "react-redux";
 
-class Register extends React.Component {
+class Register extends Component {
     constructor(props) {
         super(props);
         this.state = {
             username: '',
             email: '',
             password: '',
-            confirm_password: ''
+            password_confirmation: '',
+            errors: []
         }
     }
 
@@ -20,16 +21,30 @@ class Register extends React.Component {
         });
     };
 
+    componentWillReceiveProps(nextProps){
+        if (nextProps && nextProps.auth.alert) {
+            this.setState({
+                errors: nextProps.auth.alert.errors
+            });
+        }
+    }
 
     onSubmit = e => {
         e.preventDefault();
-        const { username, email, password, confirm_password } = this.state;
-        const params = {username, email, password, confirm_password};
+        const { username, email, password, password_confirmation } = this.state;
+        const params = {username, email, password, password_confirmation};
         this.props.auth.registerAuth(params, this.props.router)
     };
 
     render() {
-        const { username, email, password, confirm_password } = this.state;
+        const {
+            username,
+            email,
+            password,
+            password_confirmation,
+            errors
+        } = this.state;
+        
         return (
             <div className="container">
                 <div className="row">
@@ -39,44 +54,64 @@ class Register extends React.Component {
                                 <h5 className="card-title text-center">Sign Up</h5>
                                 <form className="form-signin" onSubmit={this.onSubmit}>
                                     <div className="form-label-group">
-                                        <input
+                                        <input 
                                             type="text"
                                             name="username"
-                                            className="form-control"
+                                            className={`form-control${
+                                                errors && errors.username ? ' border border-danger' : ''
+                                            }`}
                                             placeholder="Username"
                                             value={username}
                                             onChange={this.onChange}
                                             />
+                                        {errors && errors.username &&
+                                            <span className="form-field__required text-danger">{errors.username}</span>
+                                        }
                                     </div>
                                     <div className="form-label-group">
                                         <input
                                             type="email"
                                             name="email"
-                                            className="form-control"
+                                            className={`form-control${
+                                                errors && errors.email ? ' border border-danger' : ''
+                                            }`}
                                             placeholder="Email address"
                                             value={email}
                                             onChange={this.onChange}
                                             />
+                                        {errors && errors.email &&
+                                            <span className="form-field__required text-danger">{errors.email}</span>
+                                        }
                                     </div>
                                     <div className="form-label-group">
                                         <input
                                             type="password"
                                             name="password"
-                                            className="form-control"
+                                            className={`form-control${
+                                                errors && errors.password ? ' border border-danger' : ''
+                                            }`}
                                             placeholder="Password"
                                             value={password}
                                             onChange={this.onChange}
                                             />
+                                        {errors && errors.password &&
+                                            <span className="form-field__required text-danger">{errors.password}</span>
+                                        }
                                     </div>
                                     <div className="form-label-group">
                                         <input
                                             type="password"
-                                            name="confirm_password"
-                                            className="form-control"
+                                            name="password_confirmation"
+                                            className={`form-control${
+                                                errors && errors.password ? ' border border-danger' : ''
+                                            }`}
                                             placeholder="Confirm Password"
-                                            value={confirm_password}
+                                            value={password_confirmation}
                                             onChange={this.onChange}
                                             />
+                                        {errors && errors.password &&
+                                            <span className="form-field__required text-danger">{errors.password}</span>
+                                        }
                                     </div>
                                     <hr className="my-4"/>
                                     <button className="btn btn-lg btn-primary btn-block text-uppercase">Sign Up</button>
