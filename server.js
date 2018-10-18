@@ -12,28 +12,12 @@ const cookieParser = require('cookie-parser');
 
 app.prepare()
   .then(() => {
-	server.use(handler)
-  server.use(cookieParser());
+    server.use(handler)
+    server.use(cookieParser());
 
-	server.get('*', (req, res) => {
-	   return handle(req, res)
-	})
-
-  server.get('/auth/login', (req, res) => {
-      if(req.cookies.token) {
-        res.redirect('/');
-      } else {
-        return app.render(req, res, '/auth/login', req.query);
-      }
-    });
-
-    server.get('/auth/register', (req, res) => {
-      if(req.cookies.token) {
-        res.redirect('/');
-      } else {
-        return app.render(req, res, '/auth/register', req.query);
-      }
-    });
+    server.get('*', (req, res) => {
+       return handle(req, res)
+    })
 
     createServer(handler)
       .listen(port, (err) => {

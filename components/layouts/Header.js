@@ -13,18 +13,20 @@ import {Auth} from './../../constants/ApiRequest';
 class Header extends React.Component {
     onLogout = () => {
         this.props.logout();
+        localStorage.removeItem('refreshToken');
         window.location.href = "/auth/login"
     }
 
     componentDidMount() {
-        if (typeof getCookie('token') != 'undefined' && !localStorage.refreshToken) {
+        if (getCookie('token') && !localStorage.refreshToken) {
+            localStorage.setItem('refreshToken', Math.random().toString(36));
+        }
+        else if (getCookie('token') && localStorage.refreshToken) {
             let decoded = jwt_decode(getCookie('token'));
             let currentTime = Date.now()/1000;
-
             let timeOut = (parseFloat(decoded.exp) - parseFloat(currentTime))*1000;
             let timeRefresh = timeOut - 300000;
             if (parseFloat(decoded.exp) > parseFloat(currentTime) && timeOut >= timeRefresh) {
-                localStorage.setItem('refreshToken', Math.random().toString(36));
                 if (this.requestTimeout) clearTimeout(this.requestTimeout);
                 this.requestTimeout = setTimeout(() => {
                     (new Http()).get(Auth.REFRESH)
@@ -41,6 +43,10 @@ class Header extends React.Component {
                 window.location.href = '/auth/login';
             }
         }
+    }
+
+    componentWillUnMount() {
+        if (this.requestTimeout) clearTimeout(this.requestTimeout);
     }
 
     render() {

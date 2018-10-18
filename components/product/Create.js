@@ -1,8 +1,6 @@
 import React from 'react';
 import Main from './../Main'
 import ActiveLink from './../ActiveLink';
-import { reqCreateProduct } from './../../modules/product/actions'
-import {connect} from "react-redux";
 import { withRouter } from 'next/router'
 
 class Create extends React.Component {
@@ -26,7 +24,7 @@ class Create extends React.Component {
         e.preventDefault();
         const { name, description, price } = this.state;
         const params = {name, description, price};
-        this.props.createProduct(params, this.props.router)
+        this.props.product.createProduct(params, this.props.router)
     };
 
     render() {
@@ -84,14 +82,5 @@ class Create extends React.Component {
         );
     }
 }
-const mapStateToProps = state => ({});
 
-const mapDispatchToProps = (dispatch, props) => {
-    return {
-        createProduct: (product, router) => {
-            dispatch(reqCreateProduct(product, router));
-        }
-    }
-}
-
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Create));
+export default withRouter(Create);

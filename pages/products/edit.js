@@ -2,6 +2,7 @@ import React from 'react'
 import {connect} from 'react-redux'
 import Edit from './../../components/product/Edit'
 import Head from './../../components/Seo';
+import { reqEditProduct, reqUpdateProduct } from './../../modules/product/actions';
 
 class EditPage extends React.Component {
     static async getInitialProps ({ctx}) {
@@ -57,7 +58,7 @@ class EditPage extends React.Component {
         return (
             <div>
                 {renderHead}
-                <Edit id={this.props[0]} />
+                <Edit id={this.props[0]} product={this.props}/>
             </div>
         )
     }
@@ -69,4 +70,15 @@ const mapStateToProps = state => {
     }
 }
 
-export default connect(mapStateToProps)(EditPage);
+const mapDispatchToProps = (dispatch, props) => {
+    return {
+        editProduct: (id) => {
+            dispatch(reqEditProduct(id));
+        },
+        updateProduct: (id, product, router) => {
+            dispatch(reqUpdateProduct(id, product, router));
+        }
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(EditPage);
