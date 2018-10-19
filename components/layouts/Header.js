@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {Component} from 'react';
 import Link from 'next/link';
 import ActiveLink from './../ActiveLink';
 import { reqLogoutAuth, recLoginAuth } from './../../modules/auth/actions';
@@ -10,7 +10,7 @@ import jwt_decode from 'jwt-decode';
 import store from './../../store';
 import {Auth} from './../../constants/ApiRequest';
 
-class Header extends React.Component {
+class Header extends Component {
     onLogout = () => {
         this.props.logout();
         localStorage.removeItem('refreshToken');

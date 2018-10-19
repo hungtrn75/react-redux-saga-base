@@ -1,9 +1,9 @@
-import React from 'react';
+import React, {Component} from 'react';
 import Main from './../Main'
 import ActiveLink from './../ActiveLink';
 import { withRouter } from 'next/router'
 
-class EditComponent extends React.Component {
+class EditComponent extends Component {
     constructor(props) {
         super(props);
         this.state = {

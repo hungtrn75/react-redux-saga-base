@@ -1,4 +1,4 @@
-import { takeEvery, call, put } from 'redux-saga/effects';
+import { takeEvery, call, put, takeLatest } from 'redux-saga/effects';
 import { fetchProducts, createNewProduct, editProduct, updateProduct, deleteProduct} from './api';
 import * as Types from './types'
 import { recFetchProducts, recEditProduct } from './actions';
@@ -16,22 +16,22 @@ export function* productsSaga() {
     yield takeEvery(Types.REQUEST_FETCH_PRODUCTS, callFetchProducts);
 }
 
-function* callCreateProduct(payload) {
+function* callCreateProduct(action) {
     try {
-        let newProduct = yield call(createNewProduct, payload.product);
-        yield call(payload.router.push, '/products');
+        let newProduct = yield call(createNewProduct, action.product);
+        yield call(action.router.push, '/products');
     } catch (e) {
         console.log(e);
     }
 }
 
 export function* addProductSaga() {
-    yield takeEvery(Types.REQUEST_CREATE_PRODUCT, callCreateProduct);
+    yield takeLatest(Types.REQUEST_CREATE_PRODUCT, callCreateProduct);
 }
 
-function* callEditProduct(id) {
+function* callEditProduct(action) {
     try{
-        const products = yield call(editProduct, id.id);
+        const products = yield call(editProduct, action.id);
         yield put(recEditProduct(products));
     } catch (e) {
         console.log(e);
@@ -42,22 +42,22 @@ export function* editProductSaga() {
     yield takeEvery(Types.REQUEST_EDIT_PRODUCT, callEditProduct);
 }
 
-function* callUpdateProduct(payload) {
+function* callUpdateProduct(action) {
     try {
-        let product = yield call(updateProduct, payload);
-        yield call(payload.router.push, '/products');
+        let product = yield call(updateProduct, action);
+        yield call(action.router.push, '/products');
     } catch (e) {
         console.log(e);
     }
 }
 
 export function* updateProductSaga() {
-    yield takeEvery(Types.REQUEST_UPDATE_PRODUCT, callUpdateProduct);
+    yield takeLatest(Types.REQUEST_UPDATE_PRODUCT, callUpdateProduct);
 }
 
-function* callDeleteProduct(payload) {
+function* callDeleteProduct(action) {
     try {
-        let product = yield call(deleteProduct, payload.id);
+        let product = yield call(deleteProduct, action.id);
         location.reload();
     } catch (e) {
         console.log(e);
@@ -65,5 +65,5 @@ function* callDeleteProduct(payload) {
 }
 
 export function* deleteProductSaga() {
-    yield takeEvery(Types.REQUEST_DELETE_PRODUCT, callDeleteProduct);
+    yield takeLatest(Types.REQUEST_DELETE_PRODUCT, callDeleteProduct);
 }

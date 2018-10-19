@@ -27,6 +27,7 @@ class RegisterPage extends React.Component {
 const mapStateToProps = (state) => {
     return {
         isAuthenticated : state.auth.isAuthenticated,
+        alert: state.alert
     }
 };
 
