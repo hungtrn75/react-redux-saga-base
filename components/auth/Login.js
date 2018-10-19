@@ -3,6 +3,7 @@ import ActiveLink from './../ActiveLink'
 import { withRouter } from 'next/router'
 import { reqLoginAuth } from './../../modules/auth/actions'
 import {connect} from "react-redux";
+import Loading from './../Loading';
 
 class Login extends Component {
     constructor(props) {
@@ -12,7 +13,8 @@ class Login extends Component {
             password: '',
             success: '',
             errors: [],
-            error: ''
+            error: '',
+            isLoading: false
         }
     }
 
@@ -26,7 +28,8 @@ class Login extends Component {
         if (nextProps && nextProps.auth.alert) {
             this.setState({
                 errors: nextProps.auth.alert.errors,
-                error: nextProps.auth.alert.error
+                error: nextProps.auth.alert.error,
+                isLoading: false
             });
         }
     }
@@ -44,6 +47,9 @@ class Login extends Component {
         const { email, password } = this.state;
         const params = { email, password };
         this.props.auth.loginAuth(params, this.props.router)
+        this.setState({
+            isLoading: true
+        })
     };
 
     render() {
@@ -52,7 +58,8 @@ class Login extends Component {
             password,
             success,
             errors,
-            error
+            error,
+            isLoading
         } = this.state;
 
         const successMessage = <div className="p-2 mb-2 bg-success text-white">{success}</div>;
@@ -65,6 +72,9 @@ class Login extends Component {
                         <div className="card card-signin my-5">
                             <div className="card-body">
                                 <h5 className="card-title text-center">Sign In</h5>
+                                {isLoading && 
+                                    <Loading />
+                                }
                                 <div className="form-label-group">{ success ? successMessage : (error ? errorMessage : '') }</div>
                                 <form className="form-signin" onSubmit={this.onSubmit}>
                                     <div className="form-label-group">
