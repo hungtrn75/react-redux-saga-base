@@ -7,13 +7,23 @@ import createStore from '../store'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './../static/css/App.css';
 import './../static/css/login.css';
+import './../static/css/nprogress.css';
 import { I18nextProvider } from 'react-i18next'
 import startI18n from '../lib/startI18n'
 import { getTranslation } from '../lib/translationHelpers'
 import { setCookie, getCookie, removeCookie } from './../utils/cookie';
-import config from './../config'
+import config from './../config';
+import Router from 'next/router';
+import NProgress from 'nprogress'
 
 const lang = "ja";
+
+Router.events.on('routeChangeStart', (url) => {
+  NProgress.start()
+})
+Router.events.on('routeChangeComplete', () => NProgress.done())
+Router.events.on('routeChangeError', () => NProgress.done())
+
 class MyApp extends App {
     static async getInitialProps ({ Component, ctx }) {
         let pageProps = {}

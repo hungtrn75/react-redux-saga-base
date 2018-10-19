@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import ActiveLink from './../ActiveLink'
 import { withRouter } from 'next/router'
 import {connect} from "react-redux";
+import Loading from './../Loading';
 
 class Register extends Component {
     constructor(props) {
@@ -11,7 +12,8 @@ class Register extends Component {
             email: '',
             password: '',
             password_confirmation: '',
-            errors: []
+            errors: [],
+            isLoading: false
         }
     }
 
@@ -24,7 +26,8 @@ class Register extends Component {
     componentWillReceiveProps(nextProps){
         if (nextProps && nextProps.auth.alert) {
             this.setState({
-                errors: nextProps.auth.alert.errors
+                errors: nextProps.auth.alert.errors,
+                isLoading: false
             });
         }
     }
@@ -33,7 +36,8 @@ class Register extends Component {
         e.preventDefault();
         const { username, email, password, password_confirmation } = this.state;
         const params = {username, email, password, password_confirmation};
-        this.props.auth.registerAuth(params, this.props.router)
+        this.props.auth.registerAuth(params, this.props.router);
+        this.setState({isLoading: true});
     };
 
     render() {
@@ -42,7 +46,8 @@ class Register extends Component {
             email,
             password,
             password_confirmation,
-            errors
+            errors,
+            isLoading
         } = this.state;
         
         return (
@@ -52,6 +57,9 @@ class Register extends Component {
                         <div className="card card-signin my-5">
                             <div className="card-body">
                                 <h5 className="card-title text-center">Sign Up</h5>
+                                {isLoading && 
+                                    <Loading />
+                                }
                                 <form className="form-signin" onSubmit={this.onSubmit}>
                                     <div className="form-label-group">
                                         <input 
