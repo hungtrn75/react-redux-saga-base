@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import Link from 'next/link';
 import ActiveLink from './../ActiveLink';
-import { reqLogoutAuth, recLoginAuth } from './../../modules/auth/actions';
+import { reqLogoutAuth, recLoginAuth, reqCurrentUser } from './../../modules/auth/actions';
 import { connect } from 'react-redux';
 import { withRouter } from 'next/router'
 import { getCookie, setCookie, removeCookie } from './../../utils/cookie';
@@ -9,6 +9,7 @@ import Http from './../../utils/Http';
 import jwt_decode from 'jwt-decode';
 import store from './../../store';
 import {Auth} from './../../constants/ApiRequest';
+import { authSelector } from './../../modules/auth/selectors';
 
 class Header extends Component {
     onLogout = () => {
@@ -43,6 +44,8 @@ class Header extends Component {
                 window.location.href = '/auth/login';
             }
         }
+        
+        this.props.getUser()
     }
 
     componentWillUnMount() {
@@ -50,13 +53,13 @@ class Header extends Component {
     }
 
     render() {
+        const {auth} = this.props;
         return (
             <nav className="navbar navbar-expand-lg navbar-light bg-light">
                 <ActiveLink name='home' className='navbar-brand'>ReduxSaga</ActiveLink>
                 <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span className="navbar-toggler-icon"></span>
                 </button>
-
                 <div className="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul className="navbar-nav mr-auto">
                         <li className="nav-item">
@@ -65,7 +68,7 @@ class Header extends Component {
                     </ul>
                     <ul className="form-inline my-2 my-lg-0">
                         <Link href='javascript:;'>
-                            <a onClick={this.onLogout}>Logout</a>
+                            <a onClick={this.onLogout}>Logout ({auth.user ? auth.user.username : ''})</a>
                         </Link>
                     </ul>
                 </div>
@@ -75,7 +78,7 @@ class Header extends Component {
 }
 
 const mapStateToProps = state => ({
-    isAuthenticated: state.auth.isAuthenticated
+    auth: authSelector(state)
 });
 
 const mapDispatchToProps = (dispatch, props) => {
@@ -88,6 +91,9 @@ const mapDispatchToProps = (dispatch, props) => {
         },
         setNullIsAuthenticated: () => {
             dispatch(recLoginAuth(null));
+        },
+        getUser: () => {
+            dispatch(reqCurrentUser());
         }
     }
 }

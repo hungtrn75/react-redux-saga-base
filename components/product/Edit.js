@@ -3,7 +3,7 @@ import Main from './../Main'
 import ActiveLink from './../ActiveLink';
 import { withRouter } from 'next/router'
 
-class EditComponent extends Component {
+class Edit extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -100,4 +100,4 @@ class EditComponent extends Component {
     }
 }
 
-export default withRouter(EditComponent);
+export default withRouter(Edit);

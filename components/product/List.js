@@ -2,24 +2,12 @@ import React, {Component} from 'react';
 import Main from './../Main'
 import ActiveLink from './../ActiveLink';
 import Link from 'next/link'
+import { withNamespaces } from 'react-i18next'
 
 export default class List extends Component {
-    constructor(props) {
-        super(props);
-    }
-
-    componentDidMount() {
-        this.props.products.getProducts()
-    }
-
-    onDelete = id => {
-        if (confirm('Bạn chắc chắn muốn xóa ?')) {
-            this.props.products.deleteProduct(id);
-        }
-    }
-
     render() {
         const { products, t } = this.props.products;
+        const { onDelete } = this.props;
         let showProducts = (products) =>{
             let result = null;
             if (products.length > 0) {
@@ -30,7 +18,7 @@ export default class List extends Component {
                             <td>{ product.description }</td>
                             <td>{ product.price }</td>
                             <td><ActiveLink className='' name='edit_product' params={{id: product.id}}>Edit</ActiveLink></td>
-                            <td><Link href="javascript:;"><a onClick={() => this.onDelete(product.id)}>Delete</a></Link></td>
+                            <td><Link href="javascript:;"><a onClick={() => onDelete(product.id)}>Delete</a></Link></td>
                         </tr>
                     );
                 });
@@ -40,7 +28,7 @@ export default class List extends Component {
 
         return (
             <Main>
-                <h2>{ t('common:list') }</h2>
+                <h2>{ t('product:list') }</h2>
                 <ActiveLink name='create_product' className='btn btn-block btn-light col-md-3'>Create</ActiveLink>
                 <br/>
                 <table className="table">

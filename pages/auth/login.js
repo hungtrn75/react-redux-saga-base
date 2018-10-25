@@ -4,6 +4,8 @@ import Login from './../../components/auth/Login'
 import initialize from './../../utils/initialize';
 import { withRouter } from 'next/router'
 import { reqLoginAuth } from './../../modules/auth/actions'
+import { alertsSelector } from './../../modules/alert/selectors';
+import { authSelector } from './../../modules/auth/selectors';
 
 class LoginPage extends React.Component {
 
@@ -12,7 +14,7 @@ class LoginPage extends React.Component {
     }
 
     componentDidMount() {
-        if (this.props.isAuthenticated) {
+        if (this.props.auth.isAuthenticated) {
             this.props.router.push('/');
         }
     }
@@ -26,8 +28,8 @@ class LoginPage extends React.Component {
 
 const mapStateToProps = (state) => {
     return {
-        isAuthenticated : state.auth.isAuthenticated,
-        alert: state.alert
+        auth: authSelector(state),
+        alert: alertsSelector(state)
     }
 };
 

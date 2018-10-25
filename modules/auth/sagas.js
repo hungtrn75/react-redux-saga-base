@@ -1,7 +1,7 @@
 import { takeEvery, call, put, takeLatest } from 'redux-saga/effects';
-import { registerAuth, loginAuth, refreshAuth } from './api';
+import { registerAuth, loginAuth, refreshAuth, currentAuth } from './api';
 import * as Types from './types'
-import { recLoginAuth } from './actions';
+import { recLoginAuth, recCurrentUser } from './actions';
 import { recErrorsMessage, recSuccessMessage, recErrorMessage } from './../alert/actions';
 import { setCookie, removeCookie } from './../../utils/cookie';
 
@@ -13,10 +13,6 @@ function* callRegisterAuth(action) {
     } catch (e) {
         yield put(recErrorsMessage(e.response.data.errors))
     }
-}
-
-export function* registerAuthSaga() {
-    yield takeLatest(Types.REQUEST_REGISTER_AUTH, callRegisterAuth);
 }
 
 function* callLoginAuth(action) {
@@ -37,10 +33,6 @@ function* callLoginAuth(action) {
     }
 }
 
-export function* loginAuthSaga() {
-    yield takeLatest(Types.REQUEST_LOGIN_AUTH, callLoginAuth);
-}
-
 function* callReAuthenticate(action) {
     try {
         yield put(recLoginAuth(action));
@@ -49,8 +41,13 @@ function* callReAuthenticate(action) {
     }
 }
 
-export function* reAuthenticateSaga() {
-    yield takeEvery(Types.RE_REQUEST_LOGIN_AUTH, callReAuthenticate);
+function* callCurrentUser(action) {
+    try {
+        const auth = yield call(currentAuth);
+        yield put(recCurrentUser(auth.data.user));
+    } catch (e) {
+        console.log(e.message);
+    }
 }
 
 function* callLogoutAuthenticate() {
@@ -62,6 +59,10 @@ function* callLogoutAuthenticate() {
     }
 }
 
-export function* logoutAuthSaga() {
+export function* watchAuthSaga() {
+    yield takeEvery(Types.RE_REQUEST_LOGIN_AUTH, callReAuthenticate);
+    yield takeEvery(Types.REQUEST_CURRENT_USER, callCurrentUser);
     yield takeLatest(Types.REQUEST_LOGOUT_AUTH, callLogoutAuthenticate);
+    yield takeLatest(Types.REQUEST_LOGIN_AUTH, callLoginAuth);
+    yield takeLatest(Types.REQUEST_REGISTER_AUTH, callRegisterAuth);
 }

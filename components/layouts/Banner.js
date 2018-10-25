@@ -1,17 +1,11 @@
 import React, {Component} from 'react';
 
-export default class Banner extends Component {
-    constructor(props) {
-        super(props);
-    }
+const Banner = () => (
+    <section className="jumbotron text-center">
+        <div className="container">
+            <h1 className="jumbotron-heading">REDUX SAGA BASE</h1>
+        </div>
+    </section>
+)
 
-    render() {
-        return (
-            <section className="jumbotron text-center">
-                <div className="container">
-                    <h1 className="jumbotron-heading">REDUX SAGA BASE</h1>
-                </div>
-            </section>
-        );
-    }
-}
+export default Banner;

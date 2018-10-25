@@ -5,6 +5,7 @@ import ActiveLink from './../components/ActiveLink';
 import Main from './../components/Main';
 import initialize from '../utils/initialize';
 import { withRouter } from 'next/router'
+import { authSelector } from './../modules/auth/selectors';
 
 class Index extends React.Component {
 
@@ -13,9 +14,11 @@ class Index extends React.Component {
     }
 
     componentDidMount() {
-        if (!this.props.isAuthenticated) {
+        if (!this.props.auth.isAuthenticated) {
             this.props.router.push('/auth/login');
         }
+
+
     }
 
     render () {
@@ -30,7 +33,7 @@ class Index extends React.Component {
 
 const mapStateToProps = (state) => {
     return {
-        isAuthenticated : state.auth.isAuthenticated,
+        auth : authSelector(state)
     }
 };
 

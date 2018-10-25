@@ -2,25 +2,35 @@ import React from 'react'
 import {connect} from 'react-redux'
 import List from './../../components/product/List'
 import { compose } from 'redux'
-import { translate, withNamespaces } from 'react-i18next'
+import { withNamespaces } from 'react-i18next'
 import { reqFetchProducts, reqDeleteProduct } from './../../modules/product/actions'
+import { productsSelector } from './../../modules/product/selectors';
 
 class Index extends React.Component {
+    static getInitialProps ({ store, isServer }) {
+        return { isServer }
+    }
 
-  	static getInitialProps ({ store, isServer }) {
-    	return { isServer }
-  	}
+    componentDidMount() {
+        this.props.getProducts()
+    }
 
-  	render () {
-    	return (
-        	<List products={this.props}/>
-    	)
-  	}
+    onDelete = id => {
+        if (confirm('Bạn chắc chắn muốn xóa ?')) {
+            this.props.deleteProduct(id);
+        }
+    }
+
+    render () {
+        return (
+            <List products={this.props} onDelete={this.onDelete}/>
+        )
+    }
 }
 
 const mapStateToProps = state => {
     return {
-        products: state.products
+        products: productsSelector(state)
     }
 }
 
@@ -37,5 +47,5 @@ const mapDispatchToProps = (dispatch, props) => {
 
 export default compose(
     connect(mapStateToProps, mapDispatchToProps),
-    translate(['common'])
+    withNamespaces(['product'])
 )(Index);
