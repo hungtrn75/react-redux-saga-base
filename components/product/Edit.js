@@ -24,27 +24,28 @@ class Edit extends Component {
         e.preventDefault();
         const { name, description, price } = this.state;
         const params = {name, description, price};
-        this.props.product.updateProduct(this.props.id, params, this.props.router)
+        this.props.updateProduct(this.props.id, params, this.props.router)
     };
 
     componentDidMount() {
-        this.props.product.editProduct(this.props.id)
+        this.props.editProduct(this.props.id)
     }
 
     componentWillReceiveProps(nextProps){
-        if (nextProps && nextProps.product.products) {
-            const {products} = nextProps.product;
-            this.setState({
-                name: products.product.name,
-                description: products.product.description,
-                price: products.product.price
-            });
+        if (nextProps && nextProps.product) {
+            const {product} = nextProps.product;
+            if (product) {
+                this.setState({
+                    name: product.name,
+                    description: product.description,
+                    price: product.price
+                });
+            }
         }
     }
 
     render() {
         const { name, description, price } = this.state;
-        const { products } = this.props.product.products
 
         return (
             <Main>

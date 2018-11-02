@@ -25,19 +25,19 @@ class Login extends Component {
     };
 
     componentWillReceiveProps(nextProps){
-        if (nextProps && nextProps.auth.alert) {
+        if (nextProps && nextProps.alert) {
             this.setState({
-                errors: nextProps.auth.alert.errors,
-                error: nextProps.auth.alert.error,
+                errors: nextProps.alert.errors,
+                error: nextProps.alert.error,
                 isLoading: false
             });
         }
     }
 
     componentDidMount() {
-        if (this.props.auth.alert) {
+        if (this.props.alert) {
             this.setState({
-                success: this.props.auth.alert.success
+                success: this.props.alert.success
             })
         }
     }
@@ -46,7 +46,7 @@ class Login extends Component {
         e.preventDefault();
         const { email, password } = this.state;
         const params = { email, password };
-        this.props.auth.loginAuth(params, this.props.router)
+        this.props.loginAuth(params, this.props.router)
         this.setState({
             isLoading: true
         })

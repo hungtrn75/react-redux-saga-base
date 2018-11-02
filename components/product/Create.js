@@ -24,7 +24,7 @@ class Create extends Component {
         e.preventDefault();
         const { name, description, price } = this.state;
         const params = {name, description, price};
-        this.props.product.createProduct(params, this.props.router)
+        this.props.createProduct(params, this.props.router)
     };
 
     render() {

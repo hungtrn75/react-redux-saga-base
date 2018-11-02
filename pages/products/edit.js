@@ -3,6 +3,7 @@ import {connect} from 'react-redux'
 import Edit from './../../components/product/Edit'
 import Head from './../../components/Seo';
 import { reqEditProduct, reqUpdateProduct } from './../../modules/product/actions';
+import { productsSelector } from './../../modules/product/selectors';
 
 class EditPage extends React.Component {
     static async getInitialProps ({ctx}) {
@@ -58,7 +59,12 @@ class EditPage extends React.Component {
         return (
             <div>
                 {renderHead}
-                <Edit id={this.props[0]} product={this.props}/>
+                <Edit
+                    id={this.props[0]}
+                    product={this.props.products}
+                    editProduct={this.props.editProduct}
+                    updateProduct={this.props.updateProduct}
+                />
             </div>
         )
     }
@@ -66,7 +72,7 @@ class EditPage extends React.Component {
 
 const mapStateToProps = state => {
     return {
-        products : state.products
+        products : productsSelector(state)
     }
 }
 

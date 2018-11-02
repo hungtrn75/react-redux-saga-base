@@ -54,6 +54,7 @@ class Header extends Component {
 
     render() {
         const {auth} = this.props;
+
         return (
             <nav className="navbar navbar-expand-lg navbar-light bg-light">
                 <ActiveLink name='home' className='navbar-brand'>ReduxSaga</ActiveLink>
