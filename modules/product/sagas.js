@@ -12,10 +12,6 @@ function* callFetchProducts() {
     }
 }
 
-export function* productsSaga() {
-    yield takeEvery(Types.REQUEST_FETCH_PRODUCTS, callFetchProducts);
-}
-
 function* callCreateProduct(action) {
     try {
         let newProduct = yield call(createNewProduct, action.product);
@@ -23,10 +19,6 @@ function* callCreateProduct(action) {
     } catch (e) {
         console.log(e);
     }
-}
-
-export function* addProductSaga() {
-    yield takeLatest(Types.REQUEST_CREATE_PRODUCT, callCreateProduct);
 }
 
 function* callEditProduct(action) {
@@ -38,10 +30,6 @@ function* callEditProduct(action) {
     }
 }
 
-export function* editProductSaga() {
-    yield takeEvery(Types.REQUEST_EDIT_PRODUCT, callEditProduct);
-}
-
 function* callUpdateProduct(action) {
     try {
         let product = yield call(updateProduct, action);
@@ -49,10 +37,6 @@ function* callUpdateProduct(action) {
     } catch (e) {
         console.log(e);
     }
-}
-
-export function* updateProductSaga() {
-    yield takeLatest(Types.REQUEST_UPDATE_PRODUCT, callUpdateProduct);
 }
 
 function* callDeleteProduct(action) {
@@ -64,6 +48,10 @@ function* callDeleteProduct(action) {
     }
 }
 
-export function* deleteProductSaga() {
+export function* watchProductsSaga() {
+    yield takeEvery(Types.REQUEST_FETCH_PRODUCTS, callFetchProducts);
+    yield takeLatest(Types.REQUEST_CREATE_PRODUCT, callCreateProduct);
+    yield takeEvery(Types.REQUEST_EDIT_PRODUCT, callEditProduct);
+    yield takeLatest(Types.REQUEST_UPDATE_PRODUCT, callUpdateProduct);
     yield takeLatest(Types.REQUEST_DELETE_PRODUCT, callDeleteProduct);
 }

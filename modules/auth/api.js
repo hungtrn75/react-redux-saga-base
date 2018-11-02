@@ -14,3 +14,9 @@ export function logoutAuth(data) {
         .authenticated()
         .post(Auth.LOGIN, data)
 }
+
+export function currentAuth() {
+    return (new Http())
+        .authenticated()
+        .get(Auth.CURRENT_USER)
+}

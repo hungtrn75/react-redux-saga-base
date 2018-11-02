@@ -30,6 +30,19 @@ export function reRecLoginAuth (token) {
     }
 }
 
+export function reqCurrentUser () {
+    return {
+        type: Types.REQUEST_CURRENT_USER,
+    }
+}
+
+export function recCurrentUser (user) {
+    return {
+        type: Types.RECEIVE_CURRENT_USER,
+        user
+    }
+}
+
 export function reqLogoutAuth () {
     return {
         type: Types.REQUEST_LOGOUT_AUTH
