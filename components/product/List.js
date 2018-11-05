@@ -6,8 +6,8 @@ import { withNamespaces } from 'react-i18next'
 
 export default class List extends Component {
     render() {
-        const { products, t } = this.props.products;
-        const { onDelete } = this.props;
+        const { products, t, onDelete } = this.props;
+        
         let showProducts = (products) =>{
             let result = null;
             if (products.length > 0) {

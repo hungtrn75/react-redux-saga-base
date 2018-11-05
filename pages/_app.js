@@ -11,10 +11,10 @@ import { getTranslation } from '../lib/translationHelpers'
 import { setCookie, getCookie, removeCookie } from './../utils/cookie';
 import config from './../config';
 import Router from 'next/router';
-import NProgress from 'nprogress'
+import NProgress from 'nprogress';
+import { fromJS } from 'immutable';
 
 let lang = "ja";
-
 Router.events.on('routeChangeStart', (url) => {
     NProgress.start()
 })
@@ -57,4 +57,7 @@ class MyApp extends App {
     }
 }
 
-export default withRedux(createStore)(withReduxSaga({ async: true })(MyApp))
+export default withRedux(createStore, {
+    serializeState: state => state.toJS(),
+    deserializeState: state => fromJS(state)
+})(withReduxSaga({ async: true })(MyApp))

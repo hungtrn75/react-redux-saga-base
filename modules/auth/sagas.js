@@ -8,8 +8,8 @@ import { setCookie, removeCookie } from './../../utils/cookie';
 function* callRegisterAuth(action) {
     try {
         let user = yield call(registerAuth, action.data);
-        yield call(action.router.push, '/auth/login');
         yield put(recSuccessMessage(user.data.message))
+        yield call(action.router.push, '/auth/login');
     } catch (e) {
         yield put(recErrorsMessage(e.response.data.errors))
     }
@@ -27,8 +27,10 @@ function* callLoginAuth(action) {
     } catch (e) {
         if (e.response.data.error) {
             yield put(recErrorMessage(e.response.data.error))
+            yield put(recErrorsMessage(null))
         } else {
             yield put(recErrorsMessage(e.response.data.errors))
+            yield put(recErrorMessage(null))
         }
     }
 }

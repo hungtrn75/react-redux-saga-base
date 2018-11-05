@@ -24,9 +24,9 @@ class Register extends Component {
     };
 
     componentWillReceiveProps(nextProps){
-        if (nextProps && nextProps.auth.alert) {
+        if (nextProps && nextProps.alert) {
             this.setState({
-                errors: nextProps.auth.alert.errors,
+                errors: nextProps.alert.errors,
                 isLoading: false
             });
         }
@@ -36,7 +36,7 @@ class Register extends Component {
         e.preventDefault();
         const { username, email, password, password_confirmation } = this.state;
         const params = {username, email, password, password_confirmation};
-        this.props.auth.registerAuth(params, this.props.router);
+        this.props.registerAuth(params, this.props.router);
         this.setState({isLoading: true});
     };
 
@@ -49,7 +49,7 @@ class Register extends Component {
             errors,
             isLoading
         } = this.state;
-        
+
         return (
             <div className="container">
                 <div className="row">

@@ -6,6 +6,7 @@ import { withRouter } from 'next/router'
 import { reqLoginAuth } from './../../modules/auth/actions'
 import { alertsSelector } from './../../modules/alert/selectors';
 import { authSelector } from './../../modules/auth/selectors';
+import { Map } from 'immutable';
 
 class LoginPage extends React.Component {
 
@@ -21,7 +22,11 @@ class LoginPage extends React.Component {
 
     render () {
         return (
-            <Login auth={this.props}/>
+            <Login
+                auth={this.props.auth}
+                alert={this.props.alert}
+                loginAuth={this.props.loginAuth}
+            />
         )
     }
 }

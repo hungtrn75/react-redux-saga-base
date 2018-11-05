@@ -3,7 +3,6 @@ import { reRecLoginAuth } from '../modules/auth/actions';
 import { getCookie } from './cookie';
 
 export default function(ctx) {
-
     if (ctx.isServer) {
         if (ctx.req.headers.cookie) {
         const cookie = (ctx.req.headers.cookie.split(';').find(c => c.trim().startsWith('token=')));
@@ -15,7 +14,7 @@ export default function(ctx) {
         return null;
     }
   } else {
-    const token = ctx.store.getState().auth.isAuthenticated;
+    const token = ctx.store.getState().getIn(['auth', 'isAuthenticated']);
 
     if (token && (ctx.pathname === '/auth/login' || ctx.pathname === '/auth/register')) {
             setTimeout(function() {

@@ -11,7 +11,9 @@ class CreatePage extends React.Component {
 
   	render () {
     	return (
-        	<Create product={this.props}/>
+        	<Create
+                createProduct={this.props.createProduct}
+            />
     	)
   	}
 }

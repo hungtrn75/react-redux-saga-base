@@ -23,7 +23,11 @@ class Index extends React.Component {
 
     render () {
         return (
-            <List products={this.props} onDelete={this.onDelete}/>
+            <List
+                products={this.props.products}
+                t={this.props.t}
+                onDelete={this.onDelete}
+            />
         )
     }
 }

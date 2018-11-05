@@ -17,8 +17,6 @@ class Index extends React.Component {
         if (!this.props.auth.isAuthenticated) {
             this.props.router.push('/auth/login');
         }
-
-
     }
 
     render () {

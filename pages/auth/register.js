@@ -21,7 +21,11 @@ class RegisterPage extends React.Component {
 
     render () {
         return (
-            <Register auth={this.props}/>
+            <Register 
+                auth={this.props.auth}
+                alert={this.props.alert}
+                registerAuth={this.props.registerAuth}
+            />
         )
     }
 }
