@@ -8,7 +8,10 @@ import { productsSelector } from './../../modules/product/selectors';
 class EditPage extends React.Component {
     static async getInitialProps ({ctx}) {
         const { query } = ctx;
-        return query.id
+
+        return {
+            id: query.id
+        }
     }
 
     render (props) {
@@ -60,7 +63,7 @@ class EditPage extends React.Component {
             <div>
                 {renderHead}
                 <Edit
-                    id={this.props[0]}
+                    id={this.props.id}
                     product={this.props.products}
                     editProduct={this.props.editProduct}
                     updateProduct={this.props.updateProduct}
