@@ -2,12 +2,10 @@ import React, {Component} from 'react';
 import Main from './../Main'
 import ActiveLink from './../ActiveLink';
 import Link from 'next/link'
-import { withNamespaces } from 'react-i18next'
 
 export default class List extends Component {
     render() {
         const { products, t, onDelete } = this.props;
-        
         let showProducts = (products) =>{
             let result = null;
             if (products.length > 0) {
